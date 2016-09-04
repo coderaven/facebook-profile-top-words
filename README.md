@@ -8,6 +8,8 @@ Get Access Token from Facebook:
 	3. Add "user_status" permission in pop-up (IMPORTANT)
 	4. Copy access_token from Graph Explorer and replace in the variable access_token in the ruby file"
 
+IMPORTANT: Access Tokens Expire in 2 Hours. Just hit the link and get a new one if it expires or if you are to use this in an application - make sure to authenticate properly. Though good luck making facebook approve the publishing of your app haha xD
+
 run by: ruby facebook_words_fetch.rb
 
 Settings you can change:

@@ -1,10 +1,17 @@
 require 'open-uri'
 require 'rest-client'
+require 'pp'
 require 'json'
 require 'hashie'
 
+# Get Access Token from Facebook:
+# 1. Hit URl : https://developers.facebook.com/tools/explorer/?method=GET&path=me%2Fstatuses&version=v2.2&
+# 2. click on "Get Access Token" button
+# 3. Add "user_status" permission in pop-up (IMPORTANT)
+# 4. Copy access_token from Graph Explorer and replace in the below variable"
+
 access_token = 'ACCESS_TOKEN_HERE'
-top_words_count = 100
+top_words_count = 20
 
 words_to_filter = ["a", "able", "about", "across", "after", "all", "almost", "also", "am", "among", "an",
                   "and", "any", "are", "as", "at", "be", "because", "been", "but", "by", "can", "cannot",
@@ -19,8 +26,8 @@ words_to_filter = ["a", "able", "about", "across", "after", "all", "almost", "al
 
 user_words = {}
 
-limit = 10 # Limit of recent posts to cover
-minimum_word_length = 4 # Minimum length of the word to cover
+limit = 100 # Limit of recent posts to cover
+minimum_word_length = 4
 uri = "https://graph.facebook.com/me/statuses?access_token=#{access_token}&limit=#{limit}"
 
 response = RestClient.get(uri)
@@ -37,6 +44,7 @@ puts "Statuses: \n"
 # Process and Count Frequency
 statuses_json["data"].each do |status|
 	# puts status["message"]
+  next if status["message"].nil?
 	message = status["message"].downcase
 
 	# Remove all special characters (everything other than alphabets, numbers and spaces) from post
